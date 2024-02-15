@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UD5T3.MVVM.Views.AlumnoView"
+             xmlns:local="clr-namespace:UD5T3.MVVM.ViewModel"
+             Title="AlumnoView">
+    <Grid RowDefinitions=".20*, .80*">
+        <VerticalStackLayout Margin="10">
+            <Entry Placeholder="Name" Text="{Binding AlumnoActual.Name}"/>
+            <Entry Placeholder="NIF"  Text="{Binding AlumnoActual.NIF}"/>
+            <Entry Placeholder="Empresa"  Text="{Binding AlumnoActual.Empresa}"/>
+            <Button Text="Añadir o Actualizar"
+                    WidthRequest="200"
+                    Command="{Binding AddOrUpdate}"/>
+        </VerticalStackLayout>
+        <CollectionView Margin="0, 50, 0, 0"
+                        SelectionMode="Single"
+                        ItemsSource="{Binding Alumnos}"
+                        SelectedItem="{Binding AlumnoActual}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="*,*,*,*" 
+                          RowSpacing="10">
+                        <Label Text="{Binding Nombre}"/>
+                        <Label Text="{Binding NIF}"
+                               Grid.Column="1"/>
+                        <Button Grid.Column="2"
+                                Text="Borrar"
+                                HeightRequest="50"
+                                WidthRequest="100"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:AlumnoViewModel}}, Path=Delete}"
+                                CommandParameter="{Binding ID}"/>
+                        <Button Grid.Column="3"
+                                Text="Detalles"
+                                HeightRequest="50"
+                                WidthRequest="100"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:AlumnoViewModel}}, Path=Detalle}"
+                                CommandParameter="{Binding ID}"
+                                Clicked="Detalle_cliked"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
